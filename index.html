@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather Forecast</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+	<script type="text/javascript">
+		$(document).ready(function() {
+		    $('form').submit(function() {
+		        // your code here (build up your url)
+		        var url = "http://api.openweathermap.org/data/2.5/weather?q=";
+		        url += $('#city').val();
+		        url += "&&appid=d0518d384b1b383bd23d3ed577bab338";
+		        $.get(url, function(res) {
+		        	var html_str = "<h1>";
+		        	html_str += res.name;
+		        	html_str += "</h1><p>Temperature: ";
+		        	html_str += Math.round((res.main.temp-273.16)*(9/5)+32);
+		        	html_str += "</p>";
+			        $('#weather').html(html_str);		        	
+		        }, 'json');
+		        // don't forget to return false so the page doesn't refresh
+		        return false;
+		    });
+		});
+	</script>
+</head>
+<body>
+	<form action="process.php" method="post">
+		<div class="form-field">
+			<input type="text" id="city" name="city">
+			<input id="button" type="submit" value="Search Weather">
+			<div id="weather"></div>
+		</div>
+	</form>
+</body>
+</html>
